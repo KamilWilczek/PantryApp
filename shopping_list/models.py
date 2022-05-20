@@ -12,7 +12,7 @@ class ItemCategory(models.TextChoices):
     FRUITS_VEGETABLES = "fruits and vegetables"
     MEAT = "meat"
     DIARY = "diary"
-    DRY_GOODS = "dry good"
+    DRY_GOODS = "dry goods"
     ALCOHOLS = "alcohols"
     MEDICINE = "medicine"
     PET_GOODS = "pet goods"
@@ -43,6 +43,15 @@ class ItemUnit(models.TextChoices):
     GRAM = "g"
     LITER = "l"
     MILLILITER = "ml"
+
+
+class ShoppingList(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(max_length=220)
+    description = models.TextField(blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=True)
 
 
 class Item(models.Model):
