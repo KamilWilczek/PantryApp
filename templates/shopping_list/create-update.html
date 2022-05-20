@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div>
+    <a href="{% url 'shopping_list:list' %}">Return</a>
+</div>
+<hr>
+{% if message %}
+
+<p>{{ message }}</p>
+{% endif %}
+<div style='margin-top:30px;'>
+    <form action='.' method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button style='margin-top:10px;' type='submit' >Save</button>
+    </form>
+</div>
+
+
+
+{% endblock content %}
