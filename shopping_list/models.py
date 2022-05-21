@@ -49,13 +49,19 @@ class ShoppingList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=220)
     description = models.TextField(blank=True, null=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
 
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("shopping_list:list")
+
 
 class Item(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    shopping_list = models.ManyToManyField(ShoppingList)
     product = models.CharField(max_length=200)
     quantity = models.IntegerField(null=True, blank=True)
     unit = models.CharField(
@@ -63,14 +69,15 @@ class Item(models.Model):
     )
     category = models.CharField(max_length=25, choices=ItemCategory.choices)
     note = models.TextField(null=True, blank=True)
-    complete = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.product
 
     class Meta:
-        ordering = ["complete"]
+        ordering = ["active"]
 
     def get_absolute_url(self):
         return reverse("shopping_list:list")

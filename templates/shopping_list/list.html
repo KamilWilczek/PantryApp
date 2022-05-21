@@ -5,56 +5,16 @@
     <h3><a href="{% url 'shopping_list:create' %}">Add</a>
     </h3>
     <hr/>
-    {% for item in items_list %}
-        {% if item.complete %}
-            <div>
-                <a href="#">uncomplete</a>
-                <div>
-                    <div>
-                        {{item.category}}
-                    </div>
-                    <div>
-                        <div>
-                            <s><a href="{% url 'shopping_list:update' item.id %}">{{item}}</a></s>
-                        </div>
-                        <div>
-                            <i><a>{{item.note}}</a></i>
-                        </div>
-                    </div>
-                    <div>
-                        {{item.quantity}}
-                    </div>
-                    <div>
-                        {{item.unit}}
-                    </div>
-                </div>
-                <a href="#">delete</a>
-            </div>
-        {% else %}
-            <div>
-                <a href="#">complete</a>
-                <div>
-                    <div>
-                        {{item.category}}
-                    </div>
-                    <div>
-                        <div>
-                            <a href="{% url 'shopping_list:update' item.id %}">{{item}}</a>
-                        </div>
-                        <div>
-                            <i><a>{{item.note}}</a></i>
-                        </div>
-                    </div>
-                    <div>
-                        {{item.quantity}}
-                    </div>
-                    <div>
-                        {{item.unit}}
-                    </div>
-                </div>
-                <a href="#">delete</a>
-            </div>
-        {% endif %}
+    {% for shopping_list in shopping_lists %}
+        <div>
+            <a href="#">Complete</a>
+        </div>
+        <div>
+            <a href="{% url 'shopping_list:update' shopping_list.id %}">{{ shopping_list.name }}</a>
+        </div>
+        <div>
+            <a href="{% url 'shopping_list:delete' shopping_list.id %}">Delete</a>
+        </div>
     {% endfor %}
 
 {% endblock content %}

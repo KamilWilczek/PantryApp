@@ -6,10 +6,6 @@
     <a href="{% url 'shopping_list:list' %}">Return</a>
 </div>
 <hr>
-{% if message %}
-
-<p>{{ message }}</p>
-{% endif %}
 <div style='margin-top:30px;'>
     <form action='.' method="POST">
         {% csrf_token %}
