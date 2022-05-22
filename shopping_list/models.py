@@ -59,6 +59,9 @@ class ShoppingList(models.Model):
     def get_absolute_url(self):
         return reverse("shopping_list:list")
 
+    def get_items_children(self):
+        return self.item_set.all()
+
 
 class Item(models.Model):
     shopping_list = models.ManyToManyField(ShoppingList)

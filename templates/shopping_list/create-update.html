@@ -10,6 +10,17 @@
     <form action='.' method="POST">
         {% csrf_token %}
         {{ form.as_p }}
+        <div>
+            <h3>Items</h3>
+            <div>
+                {% for item in object.get_items_children %}
+                    {% include 'shopping_list/partials/item-inline.html' with object=item %}
+                {% endfor %}
+            </div>
+            {% if new_item_url %}
+                <button >Add ingredient</button>
+            {% endif %}
+        </div>
         <button style='margin-top:10px;' type='submit' >Save</button>
     </form>
 </div>

@@ -24,7 +24,8 @@ def shopping_list_create_view(request):
 def shopping_list_update_view(request, id=None):
     obj = ShoppingList.objects.get(id=id)
     form = ShoppingListForm(request.POST or None, instance=obj)
-    context = {"form": form, "object": obj}
+    new_item_url = reverse("shopping_list:item-create", kwargs={"parent_id": obj.id})
+    context = {"form": form, "object": obj, "new_item_url": new_item_url}
     if form.is_valid():
         form.save()
         context["message"] = "Data saved."
@@ -39,6 +40,20 @@ def shopping_list_delete_view(request, id=None):
         return redirect(success_url)
     context = {"object": obj}
     return render(request, "shopping_list/delete.html", context)
+
+
+def shopping_list_item_update_view(request, parent_id=None, id=None):
+    parent_obj = ShoppingList.object.get(id=parent_id, user=request.user)
+    instance = Item.objects.get(shopping_list=parent_obj, id=id)
+    form = ItemForm(request.POST or None, instance=instance)
+    url = reverse("shopping_list:item-create", kwargs={"parent_id": parent_obj.id})
+    context = {"url": url, "form": form, "object": instance}
+    if form.is_valid():
+        new_obj = form.save()
+        new_obj.save()
+        context["object"] = new_obj
+        return render(request, "shopping_list/partials/item-inline.html", context)
+    return render(request, "shopping_list/partials/item-form.html", context)
 
 
 def item_update_view(request, id=None):

@@ -1,0 +1,12 @@
+<form action="." method="POST">
+    {% csrf_token %}
+    <hr>
+    {{ form.as_p }}
+
+
+    <div >Loading...</div>
+    <button >Save</button>
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+</form>
