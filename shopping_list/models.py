@@ -84,3 +84,7 @@ class Item(models.Model):
 
     def get_absolute_url(self):
         return reverse("shopping_list:list")
+
+    def get_item_edit_url(self):
+        kwargs = {"parent_id": self.shopping_list.id, "id": self.id}
+        return reverse("shopping_list:item-update", kwargs=kwargs)

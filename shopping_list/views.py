@@ -43,7 +43,7 @@ def shopping_list_delete_view(request, id=None):
 
 
 def shopping_list_item_update_view(request, parent_id=None, id=None):
-    parent_obj = ShoppingList.object.get(id=parent_id, user=request.user)
+    parent_obj = ShoppingList.objects.get(id=parent_id, user=request.user)
     instance = Item.objects.get(shopping_list=parent_obj, id=id)
     form = ItemForm(request.POST or None, instance=instance)
     url = reverse("shopping_list:item-create", kwargs={"parent_id": parent_obj.id})
@@ -56,11 +56,11 @@ def shopping_list_item_update_view(request, parent_id=None, id=None):
     return render(request, "shopping_list/partials/item-form.html", context)
 
 
-def item_update_view(request, id=None):
-    obj = Item.objects.get(id=id)
-    form = ItemForm(request.POST or None, instance=obj)
-    context = {"form": form, "object": obj}
-    if form.is_valid():
-        form.save()
-        context["message"] = "Data saved."
-    return render(request, "shopping_list/create-update.html", context)
+# def item_update_view(request, id=None):
+#     obj = Item.objects.get(id=id)
+#     form = ItemForm(request.POST or None, instance=obj)
+#     context = {"form": form, "object": obj}
+#     if form.is_valid():
+#         form.save()
+#         context["message"] = "Data saved."
+#     return render(request, "shopping_list/create-update.html", context)
