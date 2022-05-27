@@ -141,6 +141,7 @@ ENV/
 env.bak/
 venv.bak/
 pntrapp
+pntrvenv
 
 # Spyder project settings
 .spyderproject
